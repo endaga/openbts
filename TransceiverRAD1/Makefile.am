@@ -39,6 +39,7 @@ libtransceiver_la_SOURCES = \
 	radioInterface.cpp \
 	sigProcLib.cpp \
 	Transceiver.cpp \
+	PAController.cpp \
 	RAD1Device.cpp \
 	FactoryCalibration.cpp \
 	DummyLoad.cpp
@@ -71,6 +72,7 @@ noinst_HEADERS = \
 	radioDevice.h \
 	sigProcLib.h \
 	Transceiver.h \
+	PAController.h \
 	RAD1Device.h \
 	FactoryCalibration.h \
 	DummyLoad.h
