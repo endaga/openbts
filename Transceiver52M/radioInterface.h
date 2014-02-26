@@ -20,6 +20,7 @@
 #include "radioDevice.h"
 #include "radioVector.h"
 #include "radioClock.h"
+#include "PAController.h"
 
 /** class to interface the transceiver with the USRP */
 class RadioInterface {
@@ -58,6 +59,9 @@ protected:
   bool loadTest;
   int mNumARFCNs;
   signalVector *finalVec, *finalVec9;
+
+  //kurtis
+  PAController pa;
 
 private:
 

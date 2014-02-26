@@ -67,6 +67,9 @@ bool RadioInterface::init(int type)
   sendCursor = 0;
   recvCursor = 0;
 
+  //kurtis
+  runController(&pa);
+
   return true;
 }
 

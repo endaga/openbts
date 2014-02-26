@@ -31,6 +31,10 @@
 #include <stdio.h>
 #include "Transceiver.h"
 #include <Logger.h>
+//kurtis
+#include <Configuration.h>
+
+extern ConfigurationTable gConfig;
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -80,6 +84,8 @@ Transceiver::Transceiver(int wBasePort,
   mRxFreq = 0.0;
   mPower = -10;
   mNoiseLev = 0.0;
+
+  LOG(ALERT) << "Kurtis BTS Transceiver now running";
 }
 
 Transceiver::~Transceiver()
@@ -349,9 +355,17 @@ SoftVector *Transceiver::pullRadioVector(GSM::Time &wTime,
 
   energyDetect(*vectorBurst, 20 * mSPSRx, 0.0, &avg);
 
+
   // Update noise level
   mNoiseLev = mNoises.avg();
   avg = sqrt(avg);
+
+  double overthresh = gConfig.getFloat("VBTS.Transcevier.Overthresh");
+
+  //kurtis shit
+  if (energyDetect(*vectorBurst,20*mSamplesPerSymbol,mNoiseLev + overthresh,&avgPwr)) {
+    mRadioInterface->pa.on("Energy Detected");
+  }
 
   // run the proper correlator
   if (corrType==TSC) {
