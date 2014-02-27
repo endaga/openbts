@@ -60,9 +60,6 @@ protected:
   int mNumARFCNs;
   signalVector *finalVec, *finalVec9;
 
-  //kurtis
-  PAController pa;
-
 private:
 
   /** format samples to USRP */ 
