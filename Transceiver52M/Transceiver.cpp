@@ -363,7 +363,8 @@ SoftVector *Transceiver::pullRadioVector(GSM::Time &wTime,
   double overthresh = gConfig.getFloat("VBTS.Transcevier.Overthresh");
 
   //kurtis shit
-  if (energyDetect(*vectorBurst,20*mSamplesPerSymbol,mNoiseLev + overthresh,&avgPwr)) {
+  float fakeAvg;
+  if (energyDetect(*vectorBurst,20*mSPSRx,mNoiseLev + overthresh, &fakeAvg)) {
     mRadioInterface->pa.on("Energy Detected");
   }
 

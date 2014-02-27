@@ -60,9 +60,6 @@ protected:
   int mNumARFCNs;
   signalVector *finalVec, *finalVec9;
 
-  //kurtis
-  PAController pa;
-
 private:
 
   /** format samples to USRP */ 
@@ -141,6 +138,10 @@ public:
   /** get transport window type of attached device */ 
   enum RadioDevice::TxWindowType getWindowType() { return mRadio->getWindowType(); }
 
+  //kurtis
+  PAController pa;
+
+
 #if USRP1
 protected:
 
@@ -178,4 +179,5 @@ public:
 
   bool init(int type);
   void close();
+
 };

@@ -25,7 +25,7 @@ DESTDIR =
 
 AM_CFLAGS = $(STD_DEFINES_AND_INCLUDES) -std=gnu99 -march=native
 AM_CPPFLAGS = $(STD_DEFINES_AND_INCLUDES)
-+AM_CXXFLAGS = -ldl -lpthread -L/usr/lib   -lxmlrpc_server_abyss++ -lxmlrpc_server++ -lxmlrpc_server_abyss -lxmlrpc_server -lxmlrpc_abyss  -lpthread -lxmlrpc++ -lxmlrpc -lxmlrpc_util -lxmlrpc_xmlparse -lxmlrpc_xmltok 
+AM_CXXFLAGS = -ldl -lpthread -L/usr/lib   -lxmlrpc_server_abyss++ -lxmlrpc_server++ -lxmlrpc_server_abyss -lxmlrpc_server -lxmlrpc_abyss  -lpthread -lxmlrpc++ -lxmlrpc -lxmlrpc_util -lxmlrpc_xmlparse -lxmlrpc_xmltok 
 
 #UHD wins if both are defined
 if UHD
