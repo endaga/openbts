@@ -1053,7 +1053,7 @@ SoftVector *Demodulator::demodRadioVector(radioVector *rxBurst,
   float TOA = 0.0;
   float avgPwr = 0.0;
 
-  double overthresh = gConfig.getFloat("VBTS.Transcevier.Overthresh");
+  double overthresh = gConfig.getFloat("VBTS.Transceiver.Overthresh");
 
   //kurtis shit
   if (energyDetect(*vectorBurst,20*mSamplesPerSymbol,mEnergyThreshold + overthresh,&avgPwr)) {

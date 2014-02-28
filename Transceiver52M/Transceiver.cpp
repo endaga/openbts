@@ -360,7 +360,7 @@ SoftVector *Transceiver::pullRadioVector(GSM::Time &wTime,
   mNoiseLev = mNoises.avg();
   avg = sqrt(avg);
 
-  double overthresh = gConfig.getFloat("VBTS.Transcevier.Overthresh");
+  double overthresh = gConfig.getFloat("VBTS.Transceiver.Overthresh");
 
   //kurtis shit
   float fakeAvg;
