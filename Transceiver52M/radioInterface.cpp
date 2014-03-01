@@ -322,12 +322,18 @@ void RadioInterface::pushBuffer()
                       powerScaling, 2 * sendCursor);
 
   /* Send the all samples in the send buffer */ 
-  num_sent = mRadio->writeSamples(convertSendBuffer,
-                                  sendCursor,
-                                  &underrun,
-                                  writeTimestamp);
-  if (num_sent != sendCursor) {
+  //kurtis
+  if (pa.state()){
+      num_sent = mRadio->writeSamples(convertSendBuffer,
+				      sendCursor,
+				      &underrun,
+				      writeTimestamp);
+      if (num_sent != sendCursor) {
           LOG(ALERT) << "Transmit error " << num_sent;
+      }
+  }
+  else{
+      num_sent = sendCursor;
   }
 
   writeTimestamp += num_sent;
