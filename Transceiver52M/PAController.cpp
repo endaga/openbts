@@ -237,7 +237,9 @@ PAController::PAController()
     fd1 = open (serial_loc.c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
 
     on_cmd = gConfig.getStr("VBTS.PA.OnCommand");
+    //on_cmd = "O0=1\r";
     off_cmd = gConfig.getStr("VBTS.PA.OffCommand");
+    //off_cmd = "O0=0\r";
 #endif
 
     string start_time = gConfig.getStr("VBTS.PA.StartTime");
