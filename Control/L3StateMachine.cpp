@@ -702,6 +702,10 @@ void CSL3StateMachine::csl3HandleMsg(GenericL3Msg *gmsg)
 */
 static unsigned newUpdateCallTraffic(TranEntry *transaction, GSM::TCHFACCHLogicalChannel *TCH)
 {
+	//kurtis
+	//LOG (INFO) << "RPC On: Call Traffic";
+	gRPCClient.on();
+
 	// We dont set the state Active until both SIP dialog and MS side have acked.
 	LOG(DEBUG);
 	if (transaction->getGSMState() != CCState::Active) { return false; }
