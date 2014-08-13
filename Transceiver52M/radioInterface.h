@@ -20,6 +20,7 @@
 #include "radioDevice.h"
 #include "radioVector.h"
 #include "radioClock.h"
+#include "PAController.h"
 
 /** class to interface the transceiver with the USRP */
 class RadioInterface {
@@ -137,6 +138,10 @@ public:
   /** get transport window type of attached device */ 
   enum RadioDevice::TxWindowType getWindowType() { return mRadio->getWindowType(); }
 
+  //kurtis
+  PAController pa;
+
+
 #if USRP1
 protected:
 
@@ -174,4 +179,5 @@ public:
 
   bool init(int type);
   void close();
+
 };

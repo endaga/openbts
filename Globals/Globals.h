@@ -30,6 +30,8 @@
 //#include <TMSITable.h>
 #include <TRXManager.h>
 #include <Reporting.h>
+//kurtis
+#include <PARPCClient.h>
 
 #ifndef RN_DEVERLOPER_MODE
 #define RN_DEVERLOPER_MODE 0
@@ -68,6 +70,9 @@ extern TransceiverManager gTRX;
 void gResetWatchdog();
 size_t gWatchdogRemaining();
 bool gWatchdogExpired();
+
+//kurtis
+extern PARPCClient gRPCClient;
 
 extern ReportingTable gReports;
 #endif

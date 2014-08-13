@@ -55,6 +55,8 @@ ReportingTable gReports(gConfig.getStr("Control.Reporting.StatsTable").c_str());
 #include <SIP2Interface.h>
 #include "NeighborTable.h"
 #include <Peering.h>
+//kurtis
+#include <PARPCClient.h>
 
 #include <sys/wait.h>
 
@@ -107,6 +109,9 @@ GSMConfig gBTS;
 
 // Our interface to the software-defined radio.
 TransceiverManager gTRX(gConfig.getNum("GSM.Radio.ARFCNs"), gConfig.getStr("TRX.IP").c_str(), gConfig.getNum("TRX.Port"));
+
+//kurtis
+PARPCClient gRPCClient;
 
 /** The global peering interface. */
 Peering::PeerInterface gPeerInterface;
@@ -675,6 +680,8 @@ int main(int argc, char *argv[])
 	// OK, now it is safe to start the BTS.
 	gBTS.start();
 
+	// Start the RPC Client -kurtis
+	gRPCClient.start();
 
 	struct sockaddr_un cmdSockName;
 	cmdSockName.sun_family = AF_UNIX;
