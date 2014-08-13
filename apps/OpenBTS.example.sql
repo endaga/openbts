@@ -1,6 +1,6 @@
 --
 -- This file was generated using: ./OpenBTS --gensql
--- binary version: release 4.0TRUNK+GPRS P built Mar 25 2014 rev CommonLibs:rev 
+-- binary version: release 4.0TRUNK+GPRS P built Apr  9 2014 rev CommonLibs:rev 
 --
 -- Future changes should not be put in this file directly but
 -- rather in the program's ConfigurationKey schema.
@@ -107,6 +107,7 @@ INSERT OR IGNORE INTO "CONFIG" VALUES('GPRS.Uplink.Persist','4000',1,0,'After co
 INSERT OR IGNORE INTO "CONFIG" VALUES('GPRS.advanceblocks','10',0,0,'Number of advance blocks to use in the CCCH reservation.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.CCCH.AGCH.QMax','3',0,0,'Maximum number of access grants to be queued for transmission on AGCH before declaring congestion.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.CCCH.CCCH-CONF','1',1,0,'CCCH configuration type.  DO NOT CHANGE THIS.  Value is fixed by the implementation.  See GSM 10.5.2.11 for encoding.  Value of 1 means we are using a C-V beacon.  Any other value selects a C-IV beacon.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.CallerID.Source','displayname',0,0,'The source for numeric Caller ID has traditionally been the username field. After version 4.0 this behavior was changed to use the displayname field as it is a more accepted practice. This parameter will allow those with existing integrations to easily return to the legacy behavior until their SIP switches can be reconfigured. Additionally, using the P-Asserted-Identity header to source the Caller ID number is supported.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.CellOptions.RADIO-LINK-TIMEOUT','15',1,0,'Seconds before declaring a physical link dead.  Static.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.CellSelection.CELL-RESELECT-HYSTERESIS','3',0,0,'Cell Reselection Hysteresis.  See GSM 04.08 10.5.2.4, Table 10.5.23 for encoding.  Encoding is $2N$ dB, values of $N$ are 0...7 for 0...14 dB.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.CellSelection.MS-TXPWR-MAX-CCH','0',0,0,'Cell selection parameters.  See GSM 04.08 10.5.2.4.');
@@ -228,6 +229,15 @@ INSERT OR IGNORE INTO "CONFIG" VALUES('Test.GSM.SimulatedFER.Downlink','0',0,0,'
 INSERT OR IGNORE INTO "CONFIG" VALUES('Test.GSM.SimulatedFER.Uplink','0',0,0,'Probability (0-100) of dropping any uplink frame to test robustness.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Test.GSM.UplinkFuzzingRate','0',1,0,'Probability (0-100) of flipping a bit in any uplink frame to test robustness.  Static.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Test.SIP.SimulatedPacketLoss','0',1,0,'Probability (0-100) of dropping any inbound or outbound SIP packet to test robustness.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.EndTime','23:00',1,0,'The time to end transmitting. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.OffCommand','O0=0\r',1,0,'The command send over the serial line to turn the PA off. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.OnCommand','O0=1\r',1,0,'The command send over the serial line to turn the PA on. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.RPCLogLoc','/tmp/xmlrpc.log',1,0,'The Location of the RPC logs. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.RPCPort','8080',1,0,'The port the RPC server listens on. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.SerialLoc','/dev/ttyACM0',1,0,'The location of the Serial Line controlling the PA. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.StartTime','06:00',1,0,'The time to start transmitting regardless of idle time. Static.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.PA.Timeout','300',0,0,'The amount of time without any communications required for VBTS to power down the PA');
+INSERT OR IGNORE INTO "CONFIG" VALUES('VBTS.Transceiver.Overthresh','100',0,0,'The power (over the noise floor) required to wake VBTS');
 COMMIT;
 
 
