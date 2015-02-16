@@ -204,7 +204,7 @@ INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Local.Port','5062',1,0,'IP port that 
 INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.MaxForwards','70',0,0,'Maximum allowed number of referrals.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Proxy.Mode','',0,0,'If set to direct, then direct BTS to BTS calls are permitted without an intervening SIP switch, for example, no asterisk needed.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Proxy.Registration','127.0.0.1:5064',0,0,'The hostname or IP address and port of the proxy to be used for registration and authentication.  This should normally be the subscriber registry SIP interface, not Asterisk.');
-INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Proxy.SMS','127.0.0.1:5063',0,0,'The hostname or IP address and port of the proxy to be used for text messaging.  This is smqueue, for example.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Proxy.SMS','127.0.0.1:5060',0,0,'The hostname or IP address and port of the proxy to be used for text messaging.  This is smqueue, for example.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Proxy.Speech','127.0.0.1:5060',0,0,'The hostname or IP address and port of the proxy to be used for normal speech calls.  This is Asterisk, for example.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.Proxy.USSD','',0,0,'The hostname or IP address and port of the proxy to be used for USSD, or "testmode" to test by reflecting USSD messages back to the handset.  To disable USSD, execute "unconfig SIP.Proxy.USSD".');
 INSERT OR IGNORE INTO "CONFIG" VALUES('SIP.RFC3428.NoTrying','0',0,0,'1=enabled, 0=disabled - Send "100 Trying" response to SIP MESSAGE, even though that violates RFC-3428.');
