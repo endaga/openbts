@@ -39,10 +39,18 @@
 #include <math.h>
 #include <string>
 
+#include "NodeManager.h"
+extern NodeManager gNodeManager;
+
 using namespace std;
 using namespace GSM;
 
 
+#define RN_DISABLE_PHYSICAL_DB 1		// (pat 3-2014) Try disabling this for the major load test.
+
+
+#if RN_DISABLE_PHYSICAL_DB
+#else
 static const char* createPhysicalStatus = {
 	"CREATE TABLE IF NOT EXISTS PHYSTATUS ("
 		"CN_TN_TYPE_AND_OFFSET STRING PRIMARY KEY, "		// CnTn <chan>-<index>
@@ -61,9 +69,12 @@ static const char* createPhysicalStatus = {
 		"NCELL_RSSI INTEGER DEFAULT NULL "				// RSSI of strongest neighbor
 	")"
 };
+#endif
 
 int PhysicalStatus::open(const char* wPath)
 {
+#if RN_DISABLE_PHYSICAL_DB
+#else
 	int rc = sqlite3_open(wPath, &mDB);
 	if (rc) {
 		LOG(EMERG) << "Cannot open PhysicalStatus database at " << wPath << ": " << sqlite3_errmsg(mDB);
@@ -79,6 +90,7 @@ int PhysicalStatus::open(const char* wPath)
 	if (!sqlite3_command(mDB,enableWAL)) {
 		LOG(EMERG) << "Cannot enable WAL mode on database at " << wPath << ", error message: " << sqlite3_errmsg(mDB);
 	}
+#endif
 	return 0;
 }
 
@@ -89,7 +101,6 @@ PhysicalStatus::~PhysicalStatus()
 
 bool PhysicalStatus::createEntry(const L2LogicalChannel* chan)
 {
-	assert(mDB);
 	assert(chan);
 
 	ScopedLock lock(mLock);
@@ -116,7 +127,6 @@ bool PhysicalStatus::setPhysical(const L2LogicalChannel* chan,
 	// TODO -- It would be better if the argument what just the channel
 	// and the key was just the descriptiveString.
 
-	assert(mDB);
 	assert(chan);
 
 	// If MEAS_VALID is true, we don't have valid measurements.
@@ -124,8 +134,6 @@ bool PhysicalStatus::setPhysical(const L2LogicalChannel* chan,
 	if (measResults.MEAS_VALID()) return true; 
 
 	ScopedLock lock(mLock);
-
-	createEntry(chan);
 
 	int CN = -1;
 	if (measResults.NO_NCELL()>0) CN = measResults.BCCH_FREQ_NCELL(0);
@@ -141,9 +149,54 @@ bool PhysicalStatus::setPhysical(const L2LogicalChannel* chan,
 		}
 	}
 
-	char query[500];
 	MSPhysReportInfo *phys = chan->getPhysInfo();
+	if (gConfig.getStr("NodeManager.API.PhysicalStatus").compare("0.1") == 0) {
+		std::stringstream tao;
+		tao << chan->typeAndOffset();
 
+		JsonBox::Object eData;
+		eData["channel"]["IMSI"] = JsonBox::Value(chan->chanGetImsi(true));
+		eData["channel"]["ARFCN"] = JsonBox::Value((int)chan->ARFCN());
+		eData["channel"]["uplinkFrameErrorRate"] = JsonBox::Value(chan->FER());
+		eData["channel"]["carrierNumber"] = JsonBox::Value((int)chan->CN());
+		eData["channel"]["timeslotNumber"] = JsonBox::Value((int)chan->TN());
+		eData["channel"]["typeAndOffset"] = JsonBox::Value(tao.str());
+		eData["burst"]["RSSI"] = JsonBox::Value(phys->RSSI());
+		eData["burst"]["actualMSTimingAdvance"] = JsonBox::Value(phys->actualMSTiming());
+		eData["burst"]["actualMSPower"] = JsonBox::Value(phys->actualMSPower());
+		eData["burst"]["timingError"] = JsonBox::Value(phys->timingError());
+		eData["reports"]["servingCell"]["RXLEVEL_FULL_dBm"] = JsonBox::Value(measResults.RXLEV_FULL_SERVING_CELL_dBm());
+		eData["reports"]["servingCell"]["RXLEVEL_SUB_dBm"] = JsonBox::Value(measResults.RXLEV_SUB_SERVING_CELL_dBm());
+		eData["reports"]["servingCell"]["RXQUALITY_FULL_BER"] = JsonBox::Value(measResults.RXQUAL_FULL_SERVING_CELL_BER());
+		eData["reports"]["servingCell"]["RXQUALITY_SUB_BER"] = JsonBox::Value(measResults.RXQUAL_SUB_SERVING_CELL_BER());
+
+		JsonBox::Array neighbors;
+		unsigned nCount = measResults.NO_NCELL();
+		if (nCount != 0 && nCount != 7) {
+			for (unsigned i = 0; i < nCount; i++) {
+				int freq = (int)measResults.BCCH_FREQ_NCELL(i);
+				if (freq) {
+					JsonBox::Object neighbor;
+					neighbor["BCCH_FREQ"] = JsonBox::Value(freq);
+					neighbor["RXLEVEL_dBm"] = JsonBox::Value(measResults.RXLEV_NCELL_dBm(i));
+					neighbor["BSIC"] = JsonBox::Value((int)measResults.BSIC_NCELL(i));
+					neighbors.push_back(neighbor);
+				}
+			}
+		}
+		eData["reports"]["neighboringCells"] = JsonBox::Array(neighbors);
+
+		gNodeManager.publishEvent("PhysicalStatus", "0.1", eData);
+	}
+
+#if RN_DISABLE_PHYSICAL_DB
+	if (ARFCN) {}	// shuts up gcc.
+	return true;
+#else
+	assert(mDB);
+	createEntry(chan);
+
+	char query[500];
 	if (ARFCN<0) {
 		sprintf(query,
 			"UPDATE PHYSTATUS SET "
@@ -204,6 +257,7 @@ bool PhysicalStatus::setPhysical(const L2LogicalChannel* chan,
 	LOG(DEBUG) << "Query: " << query;
 
 	return sqlite3_command(mDB, query);
+#endif
 }
 
 #if 0

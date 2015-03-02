@@ -712,7 +712,7 @@ int main(int argc, char *argv[])
 	LOG(INFO) << "system ready";
 
 	gParser.startCommandLine();
-	gNodeManager.start(45060);
+	gNodeManager.start(45060, 45160);
 
 	while (1) {
 		char cmdbuf[1000];

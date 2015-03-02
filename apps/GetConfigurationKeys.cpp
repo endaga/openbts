@@ -2408,6 +2408,41 @@ ConfigurationKeyMap getConfigurationKeys()
 	map[tmp->getName()] = *tmp;
 	delete tmp;
 
+	tmp = new ConfigurationKey("NodeManager.API.PhysicalStatus","disabled",
+		"version",
+		ConfigurationKey::DEVELOPER,
+		ConfigurationKey::CHOICE,
+		"disabled,"
+			"0.1",
+		false,
+		"Which version of the PhysicalStatus event stream should be enabled."
+	);
+	map[tmp->getName()] = *tmp;
+	delete tmp;
+
+	tmp = new ConfigurationKey("NodeManager.Commands.Port","45060",
+		"",
+		ConfigurationKey::DEVELOPER,
+		ConfigurationKey::PORT,
+		"",
+		true,
+		"Port used by the NodeManager to receive and respond to JSON formatted commands.  "
+		"Some examples of the available commands and their formats are available in NodeManager/JSON_Interface.txt."
+	);
+	map[tmp->getName()] = *tmp;
+	delete tmp;
+
+	tmp = new ConfigurationKey("NodeManager.Events.Port","45160",
+		"",
+		ConfigurationKey::DEVELOPER,
+		ConfigurationKey::PORT,
+		"",
+		true,
+		"Port used by the NodeManager to publish API events."
+	);
+	map[tmp->getName()] = *tmp;
+	delete tmp;
+
 	tmp = new ConfigurationKey("Peering.Neighbor.RefreshAge","60",
 		"seconds",
 		ConfigurationKey::CUSTOMERTUNE,
