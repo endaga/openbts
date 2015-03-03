@@ -183,6 +183,9 @@ INSERT OR IGNORE INTO "CONFIG" VALUES('GSM.Timer.T3212','0',0,0,'Registration ti
 INSERT OR IGNORE INTO "CONFIG" VALUES('Log.Alarms.Max','20',0,0,'Maximum number of alarms to remember inside the application.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Log.File','',0,0,'Path to use for textfile based logging.  By default, this feature is disabled.  To enable, specify an absolute path to the file you wish to use, eg: /tmp/my-debug.log.  To disable again, execute "unconfig Log.File".');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Log.Level','NOTICE',0,0,'Default logging level when no other level is defined for a file.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('NodeManager.API.PhysicalStatus','disabled',0,0,'Which version of the PhysicalStatus event stream should be enabled.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('NodeManager.Commands.Port','45060',1,0,'Port used by the NodeManager to receive and respond to JSON formatted commands.  Some examples of the available commands and their formats are available in NodeManager/JSON_Interface.txt.  Static.');
+INSERT OR IGNORE INTO "CONFIG" VALUES('NodeManager.Events.Port','45160',1,0,'Port used by the NodeManager to publish API events.  Static.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Peering.Neighbor.RefreshAge','60',0,0,'Seconds before refreshing parameters from a neighbor.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Peering.NeighborTable.Path','/var/run/NeighborTable.db',1,0,'File path for neighbor information database.  Static.');
 INSERT OR IGNORE INTO "CONFIG" VALUES('Peering.Port','16001',1,0,'The UDP port used by the peer interface for handover.  Static.');
