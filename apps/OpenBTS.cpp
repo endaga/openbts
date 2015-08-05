@@ -71,7 +71,7 @@ ReportingTable gReports(gConfig.getStr("Control.Reporting.StatsTable").c_str());
 #include <string.h>
 #include <signal.h>
 
-#include "SelfDetect.h"
+//#include "SelfDetect.h"
 
 // (pat) mcheck.h is for mtrace, which permits memory leak detection.
 // Set env MALLOC_TRACE=logfilename
@@ -541,7 +541,7 @@ int main(int argc, char *argv[])
 	// register ourself to prevent two instances (and check that no other
 	// one is running).  Note that this MUST be done after the logger gets
 	// initialized.
-	if (!bAllowMultipleInstances) gSelf.RegisterProgram(argv[0]);
+	//if (!bAllowMultipleInstances) gSelf.RegisterProgram(argv[0]);
 
 	createStats();
 
