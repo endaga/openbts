@@ -628,7 +628,7 @@ L3Frame::L3Frame(SAPI_t sapi,const char* hexString)
 
 unsigned L3Frame::MTI() const
 {
-	if (!isData() || size() < 17) {
+	if (!isData() || size() < 17) { //17 as we read up to bit 17 below
 		// If someone calls MTI() on a primitive return a guaranteed invalid MTI instead of crashing:
 		return (unsigned)-1;
 	}
