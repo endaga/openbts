@@ -197,10 +197,10 @@ void L3TimeZoneAndTime::parseV(const L3Frame& src, size_t& rp)
 	// Read it all into a localtime struct tm,
 	// then covert to Unix seconds.
 	struct tm fields;
-	// year
-	fields.tm_year = 2000 + src.readField(rp,4) + src.readField(rp,4)*10;
+	// years since 1900
+	fields.tm_year = 100 + src.readField(rp,4) + src.readField(rp,4)*10;
 	// month
-	fields.tm_mon = 1 + src.readField(rp,4) + src.readField(rp,4)*10;
+	fields.tm_mon = src.readField(rp,4) + src.readField(rp,4)*10;
 	// day
 	fields.tm_mday = src.readField(rp,4) + src.readField(rp,4)*10;
 	// hour
@@ -212,7 +212,7 @@ void L3TimeZoneAndTime::parseV(const L3Frame& src, size_t& rp)
 	// zone
 	unsigned zone = src.readField(rp,4);
 	unsigned zoneSign = src.readField(rp,1);
-	zone += 10*src.readField(rp,4);
+	zone += 10*src.readField(rp,3);
 	if (zoneSign) zone = -zone;
 	fields.tm_gmtoff = zone * 15 * 60;
 	// convert

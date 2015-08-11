@@ -1,3 +1,9 @@
+openbts-public (5.0.6) unstable; urgency=medium
+
+  * Fixes a segfault when the L3 message is too short and an off-by-one error in the SMS parsing. 
+
+ -- Kurtis Heimerl <kheimerl@endaga.com>  Tue, 11 Aug 2015 12:02:14 -0700
+
 openbts-public (5.0.5) unstable; urgency=medium
 
   * optimization for RAD1 transceiver
