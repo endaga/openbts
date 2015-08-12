@@ -52,7 +52,7 @@ ostream& GSM::operator<<(ostream& os, const L2Frame* frame)
 void L3Frame::text(std::ostream &os) const
 {
 	os << "L3Frame(" <<LOGVARM(mPrimitive)<<LOGVARM(mSapi);
-	if (isData()) {
+	if (isData() && size() >= 17) { //16 is the last bit of the MTI
 		string mtiname = mti2string(PD(),MTI());
 		os <<LOGVAR2("PD",PD()) <<LOGHEX2("MTI",this->MTI()) <<"("<<mtiname<<")" <<LOGVAR2("TI",TI());
 	}
@@ -628,7 +628,7 @@ L3Frame::L3Frame(SAPI_t sapi,const char* hexString)
 
 unsigned L3Frame::MTI() const
 {
-	if (!isData() || size() < 17) { //17 as we read up to bit 17 below
+	if (!isData()) { //17 as we read up to bit 17 below
 		// If someone calls MTI() on a primitive return a guaranteed invalid MTI instead of crashing:
 		return (unsigned)-1;
 	}
