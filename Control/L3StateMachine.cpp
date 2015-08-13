@@ -768,7 +768,8 @@ static bool checkemMessages(L3LogicalChannel *dcch, int delay)
 	// All messages from all host chan saps and from sacch now come in l2recv now.
 	if (GSM::L3Frame *l3frame = dcch->l2recv(delay)) {
 		LOG(DEBUG) <<dcch<<" "<< *l3frame;
-		csl3HandleFrame(l3frame, dcch);
+		if (l3frame->size()) { csl3HandleFrame(l3frame, dcch); }
+		else { LOG(ERR) << "Empty L3 Frame"; }
 		delete l3frame;
 		return true;	// Go see if it terminated the TranEntry while we were potentially blocked.
 	}
