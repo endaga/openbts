@@ -324,7 +324,7 @@ void SACCHLogicalChannel::l2sendf(const L3Frame& frame)
 
 L3Frame * L2LogicalChannel::l2recv(unsigned timeout_ms)
 {
-	LOG(DEBUG);
+	LOG(DEBUG) << this;
 	L3Frame *result = mL3Out.read(timeout_ms);
 	if (result) WATCHINFO("l2recv " << this <<LOGVAR2("sap",result->getSAPI()) <<LOGVAR(result));
 	return result;
@@ -426,7 +426,7 @@ void L2LogicalChannel::lcinit()
 	if (mSACCH) mSACCH->sacchInit();
 	// We set T3101 now so the channel will become recyclable if the caller does nothing with it;
 	// the caller has this long to call lcstart before the channel goes back to the recyclable pool.
-	mT3101.set(T3101ms);	// It will be started again in l2start.
+	mT3101.set(T3101ms);
 	mT3109.reset(gConfig.GSM.Timer.T3109);
 	mT3111.reset(T3111ms);
 	//mTRecycle.reset(500);	// (pat) Must set a dummy value.
@@ -493,7 +493,7 @@ void L2LogicalChannel::immediateRelease()
 // WARNING: Runs in a different thread than everything else which runs in the LAPDm service handler thread.
 void L2LogicalChannel::serviceHost()
 {
-	LOG(DEBUG);
+	LOG(DEBUG) << this;
 	// We do not test T3101 on SACCH because sometimes the first measurement report does not
 	// arrive in time to keep T3101 from expiring there.
 	if (mT3101.expired()) {
@@ -507,7 +507,7 @@ void L2LogicalChannel::serviceHost()
 		immediateRelease();
 	} else if (mT3111.expired()) {
 		// Happiest outcome.  The LAPDm disconnected with a full disconnect handshake.
-		LOG(INFO) <<this <<" channel closed on T3109 expiry";
+		LOG(INFO) <<this <<" channel closed on T3111 expiry";
 		immediateRelease();
 	}
 }
@@ -802,7 +802,7 @@ bool SACCHLogicalChannel::processMeasurementReport(L3Frame *rrFrame)
 // Routine relies on l2sendf passing directly through LAPDm and going all the way to L1Encoder::transmit, which calls waitToSend.
 void SACCHLogicalChannel::serviceSACCH(unsigned &count)
 {
-	LOG(DEBUG);
+	LOG(DEBUG) << this;
 	// Send any outbound messages.  If the tx queue is empty send alternating SI5/6.
 	if (L3Frame *l3fp = mL3In.readNoBlock()) {
 		// We are writing on SAPI0 (instead of SAPI0Sacch), which is ok.  At the SAP layer it is just SAPI0 or SAPI3
