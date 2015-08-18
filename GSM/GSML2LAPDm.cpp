@@ -534,13 +534,12 @@ void L2LAPDm::receiveFrame(const GSM::L2Frame& frame)
 
 	// FIXME -- This is a HACK to fix channels that get stuck in wierd states.
 	// But if channels are stuck in wierd states, it means there's a bug somehwere.
-/*
 	if (stuckChannel(frame)) {
 		OBJLOG(ERR) << "detected stuck channel, releasing in L2";
-		abnormalRelease();
+		LOG(ERR) << "KURTIS STUCK";
+		abnormalRelease(true);
 		return;
 	}
-*/
 
 	switch (frame.primitive()) {
 		//case ESTABLISH:
