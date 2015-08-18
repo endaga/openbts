@@ -470,7 +470,7 @@ void L2LogicalChannel::immediateRelease()
 {
 	LOG(DEBUG) <<this;
 	mT3101.reset();
-	mT3109.reset(); 
+	mT3109.reset();
 	mT3111.expire();	// make sure the channel becomes recyclable
 #if 0 // fixed a better way
 	// (pat) When we release the channel the LAPDm state machine sends a dummy frame on the channel.
