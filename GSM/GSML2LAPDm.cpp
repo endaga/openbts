@@ -536,7 +536,6 @@ void L2LAPDm::receiveFrame(const GSM::L2Frame& frame)
 	// But if channels are stuck in wierd states, it means there's a bug somehwere.
 	if (stuckChannel(frame)) {
 		OBJLOG(ERR) << "detected stuck channel, releasing in L2";
-		LOG(ERR) << "KURTIS STUCK";
 		abnormalRelease(true);
 		return;
 	}
