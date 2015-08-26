@@ -762,14 +762,12 @@ void L2LAPDm::receiveUFrameDM(const L2Frame& frame)
 
 	// 5.4.6.2:
 	switch (mState) {
-	case LAPDStateUnused:
-	case LinkReleased:
-		// GSM 04.06 5.4.5: In idle state all "other" frame types ignored.
-		return;
 	case AwaitingRelease:
 		// GSM 4.06 5.4.4.2 
 		releaseLink(true,L3_RELEASE_CONFIRM);
 		return;
+	case LAPDStateUnused:
+	case LinkReleased:
 	case AwaitingEstablish:
 	case LinkEstablished:
 	case ContentionResolution:
