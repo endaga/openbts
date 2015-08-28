@@ -1,3 +1,9 @@
+openbts-public (5.0.8) unstable; urgency=medium
+
+  * Fixes sdcch dead channel issue. Phone could send DM message inappropriately, causing our state machine to get stuck. 
+
+ -- Kurtis Heimerl <kheimerl@endaga.com>  Thu, 27 Aug 2015 13:36:04 -0700
+
 openbts-public (5.0.7) unstable; urgency=medium
 
   * rollback the L3 segfault fix and adds a timeout to sdcch to kill dead channels
