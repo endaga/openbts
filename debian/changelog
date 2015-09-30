@@ -1,3 +1,9 @@
+openbts-public (5.0.9) unstable; urgency=medium
+
+  * Fixes log rotation and removes execute permissions from plain text config files 
+
+ -- Omar Ramadan <omar@endaga.com>  Wed, 30 Sep 2015 19:14:36 +0000
+
 openbts-public (5.0.8) unstable; urgency=medium
 
   * Fixes sdcch dead channel issue. Phone could send DM message inappropriately, causing our state machine to get stuck. 
